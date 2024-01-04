@@ -1,3 +1,4 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Added Support for UPI-Intent in Android Webview 
+* TODO: Have to Implement for IOS
