@@ -9,6 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  webview_flutter_wkwebview: ^3.10.2
+
   hyper_webview_flutter:
     path: ../
 

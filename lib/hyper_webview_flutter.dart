@@ -13,7 +13,7 @@ class HyperWebviewFlutter {
   static const HYPER_SDK_BRIDGE = 'HyperWebViewBridge';
   static MethodChannel nativeChannel = const MethodChannel("NativeChannel");
   static MethodChannel dartChannel = const MethodChannel("DartChannel");
-  List<String> allowedMethods = const ['findApps', 'openApp', 'getResourceByName'];
+  List<String> allowedMethods = const ['findApps', 'openApp', 'getResourceByName', 'canOpenApp'];
 
   HyperWebviewFlutter() {
     dartChannel.setMethodCallHandler((call) {
