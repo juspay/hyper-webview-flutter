@@ -1,5 +1,10 @@
+
 group 'in.juspay.hyper_webview_flutter'
 version '1.0-SNAPSHOT'
+
+def props = new Properties()
+file("version.properties").withInputStream { props.load(it) }
+def sdkVersion = props.getProperty("sdkVersion")
 
 buildscript {
     ext.kotlin_version = '1.7.10'
@@ -64,5 +69,8 @@ android {
                showStandardStreams = true
             }
         }
+    }
+    buildTypes.all {
+        resValue 'string', 'hyper_webview_sdk_version', sdkVersion
     }
 }

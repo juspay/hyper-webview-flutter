@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hyper_webview_flutter/hyper_webview_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-void main() {
-  String url = "https://picasso.juspay.in/devtools/web/index.html";
-  runApp(WebviewPaymentPage(url: url,));
-}
-
 class WebviewPaymentPage extends StatefulWidget {
-  String url;
+  final String url;
   late HyperWebviewFlutter _hyperWebviewFlutterPlugin;
 
-  WebviewPaymentPage({super.key, required this.url});
+  WebviewPaymentPage({Key? key, required this.url}) : super(key: key);
 
   @override
   State<WebviewPaymentPage> createState() => _WebviewPaymentPageState();
@@ -33,9 +27,6 @@ class _WebviewPaymentPageState extends State<WebviewPaymentPage> {
   }
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.bottom]);
-
     return MaterialApp(
         title: 'Flutter PaymentPage',
         theme: ThemeData(
