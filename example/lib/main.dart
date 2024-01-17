@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hyper_webview_flutter/hyper_webview_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 void main() {
   String url = "https://picasso.juspay.in/devtools/web/index.html";
@@ -23,9 +24,25 @@ class _WebviewPaymentPageState extends State<WebviewPaymentPage> {
   @override
   void initState() {
     var url = Uri.parse(widget.url);
-    _controller = WebViewController()
+
+    // Uncomment below snippet to debug webview
+    late final PlatformWebViewControllerCreationParams params;
+    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
+      params = WebKitWebViewControllerCreationParams();
+    } else {
+      params = const PlatformWebViewControllerCreationParams();
+    }
+    _controller = WebViewController.fromPlatformCreationParams(params)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(url);
+    if (_controller.platform is WebKitWebViewController) {
+      (_controller.platform as WebKitWebViewController)
+          .setInspectable(true);
+    }
+    
+    // _controller = WebViewController()
+    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    //   ..loadRequest(url);
     // WidgetsFlutterBinding.ensureInitialized();
     widget._hyperWebviewFlutterPlugin = HyperWebviewFlutter();
     widget._hyperWebviewFlutterPlugin.attach(_controller);
