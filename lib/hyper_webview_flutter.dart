@@ -47,7 +47,27 @@ class HyperWebviewFlutter {
   }
 
   void returnResultInWebview(int requestCode, int resultCode, dynamic result, bool isEncoded){
-    String cmd = "window.onActivityResult('$requestCode' , '$resultCode', '${sanitizeResultdata(result, isEncoded)}')";
+    String sanitizedData = sanitizeResultdata(result, isEncoded);
+    String payload = """
+      JSON.stringify({
+        name: 'onActivityResult',
+        payload: JSON.stringify({
+          requestCode: '$requestCode',
+          resultCode: '$resultCode',
+          data: '$sanitizedData'
+        })
+      })
+    """;
+    String cmd = """
+      try{
+        const message = $payload;
+        window.postMessage(message,"*");
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(function(iframe) {
+          iframe.contentWindow.postMessage(message, '*');
+        });
+      }catch(e){ }
+    """;
     _controller.runJavaScript(cmd);
   }
 
