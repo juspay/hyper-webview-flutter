@@ -1,6 +1,6 @@
 name: hyper_webview_flutter
 description: Flutter Library to enhance Juspay's Hyper Checkout Experience for Payment Links opened in WebView.
-version: 0.0.2
+version: 0.0.3
 homepage: https://www.juspay.in
 
 environment:
@@ -24,6 +24,3 @@ flutter:
       android:
         package: in.juspay.hyper_webview_flutter
         pluginClass: HyperWebviewFlutterPlugin
-      ios:
-        pluginClass: HyperWebviewFlutterPlugin
-

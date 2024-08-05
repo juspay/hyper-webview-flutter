@@ -6,7 +6,7 @@ class WebviewPaymentPage extends StatefulWidget {
   final String url;
   late HyperWebviewFlutter _hyperWebviewFlutterPlugin;
 
-  WebviewPaymentPage({Key? key, required this.url}) : super(key: key);
+  WebviewPaymentPage({super.key, required this.url});
 
   @override
   State<WebviewPaymentPage> createState() => _WebviewPaymentPageState();
