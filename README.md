@@ -1,12 +1,33 @@
-# Hyper SDK WebView Flutter
-A Flutter Plugin that enables merchants to open [Juspay's Paymentpage](https://juspay.in/) inside the webview widget.
+# Hyper WebView Flutter
+
+A Flutter Plugin that enables UPI Intent App transactions in [Juspay's Paymentpage](https://juspay.in/) inside the Flutter webview widget.
+
 ### Flutter Setup
 
-1. Begin by including the Hyper SDK WebView Flutter plugin in your project's pubspec.yaml file. Obtain the necessary dependency [here](https://pub.dev/packages/hyper_webview_flutter
-   )
-2. Instantiate a HyperWebviewFlutter object provided by this plugin.
-3. Provide the [webview Controller](https://pub.dev/documentation/webview_flutter/latest/webview_flutter/WebViewController-class.html) to the attach() function of the HyperWebviewFlutter object.
+Add flutter plugin dependency in `pubspec.yaml`.
+Get dependency from [pub.dev](https://pub.dev/packages/hyper_webview_flutter/install)
+
+## Usage
+
+### Step 1:
+
+Import `hyper_webview_flutter` package in your dart file where WebViewController is being instanciated.
+
+```dart
+import 'package:hyper_webview_flutter/hyper_webview_flutter.dart';
 ```
+### Step2:
+
+Instantiate a HyperWebviewFlutter object provided by this plugin.
+```dart
+HyperWebviewFlutter hyperWebviewFlutterPlugin = HyperWebviewFlutter();
+```
+
+### Step 3:
+
+Provide the [webview Controller](https://pub.dev/documentation/webview_flutter/latest/webview_flutter/WebViewController-class.html) to the attach() function of the HyperWebviewFlutter object.
+
+```dart
 class _WebviewPaymentPageState extends State<WebviewPaymentPage> {
   late WebViewController _controller;
   @override
@@ -15,9 +36,15 @@ class _WebviewPaymentPageState extends State<WebviewPaymentPage> {
     _controller = WebViewController()
               ..setJavaScriptMode(JavaScriptMode.unrestricted)
               ..loadRequest(url);
-    widget._hyperWebviewFlutterPlugin = HyperWebviewFlutter();
-    widget._hyperWebviewFlutterPlugin.attach(_controller);
+    widget.hyperWebviewFlutterPlugin.attach(_controller);
     super.initState();
   }
+}
  ```
-4. Utilize this controller to render the PaymentPage within the WebView.
+
+### Step 4:
+Utilize this controller to render the PaymentPage within the WebView.
+
+## License
+
+hyper_webview_flutter is distributed under [AGPL-3.0-only](https://pub.dev/packages/hypersdkflutter/license) license.

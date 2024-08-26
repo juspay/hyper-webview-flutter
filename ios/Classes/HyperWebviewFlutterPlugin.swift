@@ -1,14 +1,14 @@
 import Flutter
 
-let OPENAPPS_REQUEST_CODE = 19
+let OPENAPP_REQUEST_CODE = 19
 let GET_RESOURCE_NAME = 453
 let CAN_OPEN_APP_CODE = 789
 
 public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
-    
+
     var dartChannel: FlutterMethodChannel?
     var nativeChannel: FlutterMethodChannel?
-    
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let instance = HyperWebviewFlutterPlugin()
         instance.dartChannel = FlutterMethodChannel(name: "DartChannel", binaryMessenger: registrar.messenger())
@@ -18,14 +18,6 @@ public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if let arguments = call.arguments as? [Any], let resName = arguments.first as? String {
-            let resourceVal = getResourceByName(resName)
-            let resource: [String: Any] = [
-                "requestCode": GET_RESOURCE_NAME,
-                "payload": resourceVal
-            ]
-            dartChannel?.invokeMethod("onActivityResult", arguments: resource)
-        }
         if let arguments = call.arguments as? [String]{
             switch call.method {
             case "openApp":
@@ -45,7 +37,7 @@ public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
             }
         }
     }
-   
+
     /**
     To Check if an app can be opened by the current app
     - Parameter payload: App URL
@@ -54,7 +46,7 @@ public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
         guard let payload = payload, let appURL = URL(string: base64DecodedString(from: payload)) else {
             return
         }
-        
+
         let status = UIApplication.shared.canOpenURL(appURL)
         let resPayload = "{\"result\":\"\(status ? "1" : "0")\",\"app\":\"\(appURL)\"}"
         let resp: [String: Any] = [
@@ -68,17 +60,17 @@ public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
         guard let payload = payload, let appURL = URL(string: base64DecodedString(from: payload)) else {
             return
         }
-        
+
         let failedResp: [String: Any] = [
-            "requestCode": OPENAPPS_REQUEST_CODE,
+            "requestCode": OPENAPP_REQUEST_CODE,
             "payload": "false"
         ]
-        
+
         if UIApplication.shared.canOpenURL(appURL) {
             UIApplication.shared.open(appURL) { success in
                 if success {
                     let successResp: [String: Any] = [
-                        "requestCode": OPENAPPS_REQUEST_CODE,
+                        "requestCode": OPENAPP_REQUEST_CODE,
                         "payload": "true"
                     ]
                     self.dartChannel?.invokeMethod("onActivityResult", arguments: successResp)
@@ -98,10 +90,10 @@ public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
         } else {
             value = Bundle(for: type(of: self)).infoDictionary?[resName ?? ""] as? String
         }
-        
+
         return value ?? ""
     }
-   
+
     func base64DecodedString(from input: String?) -> String {
         guard let input = input, let decodedData = Data(base64Encoded: input) else {
             return ""

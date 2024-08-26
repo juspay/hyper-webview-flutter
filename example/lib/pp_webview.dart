@@ -4,7 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebviewPaymentPage extends StatefulWidget {
   final String url;
-  late HyperWebviewFlutter _hyperWebviewFlutterPlugin;
+  late final HyperWebviewFlutter _hyperWebviewFlutterPlugin;
 
   WebviewPaymentPage({super.key, required this.url});
 
@@ -25,6 +25,7 @@ class _WebviewPaymentPageState extends State<WebviewPaymentPage> {
     widget._hyperWebviewFlutterPlugin.attach(_controller);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,14 +33,8 @@ class _WebviewPaymentPageState extends State<WebviewPaymentPage> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home : Scaffold(
-          body: WebViewWidget(
-              controller: _controller
-          ),
-        )
-      // home: HomeScreen(
-      //   hyperSDK: hyperSDK,
-      // ),
-    );
+        home: Scaffold(
+          body: WebViewWidget(controller: _controller),
+        ));
   }
 }

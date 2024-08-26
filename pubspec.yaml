@@ -24,3 +24,5 @@ flutter:
       android:
         package: in.juspay.hyper_webview_flutter
         pluginClass: HyperWebviewFlutterPlugin
+      ios:
+        pluginClass: HyperWebviewFlutterPlugin

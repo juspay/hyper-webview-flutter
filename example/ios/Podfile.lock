@@ -6,12 +6,13 @@ PODS:
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - hyper_webview_flutter (from `.symlinks/plugins/hyper_webview_flutter/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/darwin`)
 
 EXTERNAL SOURCES:
   Flutter:
@@ -21,14 +22,14 @@ EXTERNAL SOURCES:
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
   webview_flutter_wkwebview:
-    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  hyper_webview_flutter: 2da55d848b2ab9b898a5fdb3542b60aa48b510a7
-  integration_test: 13825b8a9334a850581300559b8839134b124670
-  webview_flutter_wkwebview: 4f3e50f7273d31e5500066ed267e3ae4309c5ae4
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  hyper_webview_flutter: 0707f57e68b420052fc54673779478dea9e95ef6
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  webview_flutter_wkwebview: 0982481e3d9c78fd5c6f62a002fcd24fc791f1e4
 
-PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+PODFILE CHECKSUM: 274e27f3d62449afc2ea98bd38920bc3497b980f
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.15.2
