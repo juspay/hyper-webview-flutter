@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - hyper_webview_flutter (0.0.1):
+  - hyper_webview_flutter (0.0.4):
     - Flutter
   - integration_test (0.0.1):
     - Flutter
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  hyper_webview_flutter: 0707f57e68b420052fc54673779478dea9e95ef6
+  hyper_webview_flutter: a2d108471e1cbf7b591eeca4a8694679748cd1bb
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   webview_flutter_wkwebview: 0982481e3d9c78fd5c6f62a002fcd24fc791f1e4
 

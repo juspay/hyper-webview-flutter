@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Added ios support for the plugin.
+
 ## 0.0.3
 
 * Removed ios support in pubspec.yaml
