@@ -39,7 +39,11 @@ class HyperWebviewFlutter {
             int resultCode = args['resultCode'] ?? -1;
             dynamic payload = args['payload'];
             bool isEncoded = args["is_encoded"] ?? false;
-            returnResultInWebview(requestCode, resultCode, payload, isEncoded);
+            _returnResultInWebview(requestCode, resultCode, payload, isEncoded);
+            break;
+          case 'didBecomeActive':
+            _fireOnEvent();
+            break;
           default:
             throw 'Not handled for function ${call.method}';
         }
@@ -51,7 +55,7 @@ class HyperWebviewFlutter {
   }
 
   /// @nodoc
-  String sanitizedResultData(dynamic data, bool isEncoded) {
+  String _sanitizedResultData(dynamic data, bool isEncoded) {
     data = data ?? {};
 
     if (isEncoded && data is String) {
@@ -74,9 +78,9 @@ class HyperWebviewFlutter {
   }
 
   /// Function to send result to all iFrames.
-  void returnResultInWebview(
+  void _returnResultInWebview(
       int requestCode, int resultCode, dynamic result, bool isEncoded) {
-    String sanitizedData = sanitizedResultData(result, isEncoded);
+    String sanitizedData = _sanitizedResultData(result, isEncoded);
     String payload = """
       JSON.stringify({
         name: 'onActivityResult',
@@ -85,6 +89,27 @@ class HyperWebviewFlutter {
           resultCode: '$resultCode',
           data: '$sanitizedData'
         })
+      })
+    """;
+    String cmd = """
+      try{
+        const message = $payload;
+        window.postMessage(message,"*");
+        const iFrames = document.querySelectorAll('iframe');
+        iFrames.forEach(function(iFrame) {
+          iFrame.contentWindow.postMessage(message, '*');
+        });
+      }catch(e){ }
+    """;
+    _controller.runJavaScript(cmd);
+  }
+
+  /// To send didBecomeActive event to iFrames when user comes back to app after completing txn via UPI App.
+  void _fireOnEvent() {
+    String payload = """
+      JSON.stringify({
+        name: "didBecomeActive",
+        payload: "{}"
       })
     """;
     String cmd = """
@@ -110,7 +135,7 @@ class HyperWebviewFlutter {
         onMessageReceived: (message) {
       var data = jsonDecode(message.message);
       var fnName = data['fnName'] as String;
-      onErrorCallback() => returnResultInWebview(-1, -1, null, false);
+      onErrorCallback() => _returnResultInWebview(-1, -1, null, false);
       if (allowedMethods.contains(fnName)) {
         var args = data['args'].cast<dynamic>();
         nativeChannel.invokeMethod(fnName, args).catchError((e) {

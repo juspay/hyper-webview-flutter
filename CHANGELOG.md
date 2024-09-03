@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Bug fix where screen gets stuck at loader after completing UPI App txn.
+
 ## 0.0.4
 
 * Added ios support for the plugin.

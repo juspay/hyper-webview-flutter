@@ -21,7 +21,9 @@ public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
         if let arguments = call.arguments as? [String]{
             switch call.method {
             case "openApp":
+                self.registerNotifications()
                 openApp(arguments.first)
+                break
             case "getResourceByName":
                 let resourceVal = getResourceByName(arguments.first)
                 let resource: [String: Any] = [
@@ -29,13 +31,27 @@ public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
                     "payload": resourceVal
                 ]
                 dartChannel?.invokeMethod("onActivityResult", arguments: resource)
+                break
             case "canOpenApp":
                 canOpenApp(arguments.first)
+                break
             default:
                 result(FlutterMethodNotImplemented)
                 result("true")
             }
         }
+    }
+
+    private func registerNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+
+    @objc private func didBecomeActive() {
+        dartChannel?.invokeMethod("didBecomeActive", arguments: "")
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     /**
