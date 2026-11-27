@@ -82,20 +82,16 @@ public class HyperWebviewFlutterPlugin: NSObject, FlutterPlugin {
             "payload": "false"
         ]
 
-        if UIApplication.shared.canOpenURL(appURL) {
-            UIApplication.shared.open(appURL) { success in
-                if success {
-                    let successResp: [String: Any] = [
-                        "requestCode": OPENAPP_REQUEST_CODE,
-                        "payload": "true"
-                    ]
-                    self.dartChannel?.invokeMethod("onActivityResult", arguments: successResp)
-                } else {
-                    self.dartChannel?.invokeMethod("onActivityResult", arguments: failedResp)
-                }
+        UIApplication.shared.open(appURL) { success in
+            if success {
+                let successResp: [String: Any] = [
+                    "requestCode": OPENAPP_REQUEST_CODE,
+                    "payload": "true"
+                ]
+                self.dartChannel?.invokeMethod("onActivityResult", arguments: successResp)
+            } else {
+                self.dartChannel?.invokeMethod("onActivityResult", arguments: failedResp)
             }
-        } else {
-            dartChannel?.invokeMethod("onActivityResult", arguments: failedResp)
         }
     }
 
